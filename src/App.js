@@ -9,11 +9,8 @@ const URL = 'http://localhost/shoppinglist/';
 function App() {
  const [items, setItems] = useState([]);
  const [item, setItem] = useState('');
- const [editItem, setEditItem] = useState(null);
- const [editDescription, setEditDescription] = useState('');
  const [amount, setAmount] = useState('');
- const [amounts, setAmounts] = useState([]);
- const [editAmount, setEditAmount] = useState('');
+
 
  useEffect(() => {
   axios.get(URL)
@@ -38,7 +35,6 @@ function save(e) {
   .then((response) => {
     setItems(items => [...items,response.data]);
     setItem('');
-    setAmounts(amounts => [...amounts,response.data]);
     setAmount('');
   }).catch (error => {
     alert(error.response.data.error)
@@ -75,12 +71,12 @@ function remove(id) {
 
          {items?.map(item => (
          <a class="item" key={item.id}>
-         {editItem?.id !== item.id &&
+         {item.id &&
          item.description
          }&nbsp;
                      
         <a class="amount" key={item.id}>
-          {editAmount?.id !== item.id &&
+          {item.id &&
           item.amount
           }&nbsp;
           </a>
@@ -101,4 +97,6 @@ function remove(id) {
 
 
 export default App;
+
+
 
